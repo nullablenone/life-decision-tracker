@@ -1,0 +1,201 @@
+{{ define "layout" }}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life Decision Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f4f4f5;
+      /* Putih sedikit keabuan */
+      --card-bg: #ffffff;
+      /* Putih bersih */
+      --text: #09090b;
+      /* Hitam pekat */
+      --text-light: #71717a;
+      /* Abu-abu teks */
+      --border: #e4e4e7;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 3rem 1rem;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 3rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 2px solid var(--text);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin: 0;
+      letter-spacing: -1px;
+    }
+
+    .subtitle {
+      color: var(--text-light);
+      margin: 0;
+      font-weight: 400;
+    }
+
+    .btn-primary {
+      background: var(--text);
+      color: var(--card-bg);
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      font-family: inherit;
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.8;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      padding: 0.75rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+      font-family: inherit;
+      display: inline-block;
+    }
+
+    .btn-outline:hover {
+      background: var(--border);
+    }
+
+    .card {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 1rem;
+      border: 1px solid var(--border);
+      margin-bottom: 2rem;
+    }
+
+    /* Form Styles */
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      font-family: inherit;
+      box-sizing: border-box;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--text);
+    }
+
+    /* Table Styles */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      font-weight: 600;
+      color: var(--text-light);
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* List Styles */
+    .activity-item {
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .activity-item:last-child {
+      border-bottom: none;
+    }
+
+    .activity-title {
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin: 0;
+    }
+
+    .activity-time {
+      font-size: 0.875rem;
+      color: var(--text-light);
+      margin: 0.25rem 0 0;
+    }
+
+    .badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.25rem 0.75rem;
+      border-radius: 2rem;
+      border: 1px solid var(--text);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    {{ template "content" . }}
+  </div>
+</body>
+
+</html>
+{{ end }}
