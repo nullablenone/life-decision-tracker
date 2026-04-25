@@ -21,6 +21,6 @@ func (r *repository) Create(activity *Activity) error {
 
 func (r *repository) FindAll() ([]Activity, error) {
 	var activities []Activity
-	err := r.db.Preload("Decision").Find(&activities).Error
+	err := r.db.Preload("Decision").Order("created_at desc").Find(&activities).Error
 	return activities, err
 }
