@@ -4,7 +4,9 @@ import (
 	"log"
 
 	"github.com/nullablenone/life-decision-tracker/config"
+	"github.com/nullablenone/life-decision-tracker/domain/activity"
 	"github.com/nullablenone/life-decision-tracker/domain/decision"
+	"github.com/nullablenone/life-decision-tracker/domain/home"
 	"github.com/nullablenone/life-decision-tracker/routes"
 )
 
@@ -14,8 +16,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	if err = db.AutoMigrate(decision.DecisionCategory{}); err != nil {
-		log.Fatal("failed to create table decision catagories")
+	if err = db.AutoMigrate(decision.DecisionCategory{}, activity.Activity{}); err != nil {
+		log.Fatal("failed to migrate tables")
 	}
 
 	if err = decision.SeedDecisions(db); err != nil {
@@ -26,9 +28,15 @@ func main() {
 	decisionService := decision.NewService(decisionRepo)
 	decisionHandler := decision.NewHandler(decisionService)
 
-	router := routes.SetRoutes(decisionHandler)
-	if err = router.Run(":3333"); err != nil {
-		log.Fatalf("failed to start HTTP server on :3333: %v", err)
+	activityRepo := activity.NewRepository(db)
+	activityService := activity.NewService(activityRepo)
+	activityHandler := activity.NewHandler(activityService, decisionService)
+
+	homeHandler := home.NewHome(activityService, decisionService)
+
+	router := routes.SetRoutes(decisionHandler, activityHandler, homeHandler)
+	if err = router.Run(":777"); err != nil {
+		log.Fatalf("failed to start HTTP server on :777: %v", err)
 	}
 
 }
