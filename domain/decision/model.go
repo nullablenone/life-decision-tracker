@@ -5,4 +5,5 @@ type DecisionCategory struct {
 	Name        string `gorm:"type:varchar(20);not null"`
 	Description string `gorm:"type:varchar(200);not null" `
 	Value       int    `gorm:"type:int;not null"`
+	Color       string `gorm:"type:varchar(10);not null"`
 }

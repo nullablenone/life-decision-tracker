@@ -18,7 +18,7 @@
         <tbody>
             {{ range .categories }}
             <tr>
-                <td style="font-weight: 800; font-size: 1.1rem;">{{ .Name }}</td>
+                <td style="font-weight: 800; font-size: 1.1rem; color: {{ .Color }};">{{ .Name }}</td>
                 <td style="color: var(--text-light);">{{ .Description }}</td>
             </tr>
             {{ end }}

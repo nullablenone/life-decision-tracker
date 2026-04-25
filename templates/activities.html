@@ -37,7 +37,13 @@
                 <p class="activity-title">{{ .Title }}</p>
                 <p class="activity-time">{{ .CreatedAt.Format "Jan 02, 2006 • 15:04" }}</p>
             </div>
-            <span class="badge">{{ .Decision.Name }}</span>
+            <span class="badge" style="
+                    color: {{ .Decision.Color }}; 
+                    border-color: {{ .Decision.Color }}; 
+                    background-color: color-mix(in srgb, {{ .Decision.Color }} 15%, transparent);
+                ">
+                {{ .Decision.Name }}
+            </span>
         </div>
         {{ else }}
         <p style="text-align: center; color: var(--text-light); padding: 2rem 0;">No activities tracked yet. Start
