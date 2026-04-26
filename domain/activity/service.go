@@ -1,8 +1,8 @@
 package activity
 
 type Service interface {
-	AddActivity(title string, decisionID int) error
-	GetActivities() ([]Activity, error)
+	AddActivity(boardID string, title string, decisionID int) error
+	GetActivities(boardID string) ([]Activity, error)
 }
 
 type service struct {
@@ -13,14 +13,15 @@ func NewService(repo Repository) *service {
 	return &service{repo}
 }
 
-func (s *service) AddActivity(title string, decisionID int) error {
+func (s *service) AddActivity(boardID string, title string, decisionID int) error {
 	activity := &Activity{
+		BoardID:    boardID,
 		Title:      title,
 		DecisionID: decisionID,
 	}
 	return s.repo.Create(activity)
 }
 
-func (s *service) GetActivities() ([]Activity, error) {
-	return s.repo.FindAll()
+func (s *service) GetActivities(boardID string) ([]Activity, error) {
+	return s.repo.FindAll(boardID)
 }

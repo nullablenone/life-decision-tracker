@@ -4,7 +4,7 @@ import "gorm.io/gorm"
 
 type Repository interface {
 	Create(activity *Activity) error
-	FindAll() ([]Activity, error)
+	FindAll(boardID string) ([]Activity, error)
 }
 
 type repository struct {
@@ -19,8 +19,8 @@ func (r *repository) Create(activity *Activity) error {
 	return r.db.Create(activity).Error
 }
 
-func (r *repository) FindAll() ([]Activity, error) {
+func (r *repository) FindAll(boardID string) ([]Activity, error) {
 	var activities []Activity
-	err := r.db.Preload("Decision").Order("created_at desc").Find(&activities).Error
+	err := r.db.Preload("Decision").Where("board_id = ?", boardID).Order("created_at desc").Find(&activities).Error
 	return activities, err
 }

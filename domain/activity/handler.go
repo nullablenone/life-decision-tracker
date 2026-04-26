@@ -18,7 +18,8 @@ func NewHandler(service Service, decisionService decision.Service) *Handler {
 }
 
 func (h *Handler) Index(c *gin.Context) {
-	activities, err := h.service.GetActivities()
+	boardID := c.Param("id")
+	activities, err := h.service.GetActivities(boardID)
 	if err != nil {
 		c.HTML(http.StatusInternalServerError, "error.html", gin.H{"error": err.Error()})
 		return
@@ -31,6 +32,7 @@ func (h *Handler) Index(c *gin.Context) {
 	}
 
 	c.HTML(http.StatusOK, "activities.html", gin.H{
+		"board_id":   boardID,
 		"activities": activities,
 		"categories": categories,
 	})
@@ -46,11 +48,12 @@ func (h *Handler) Store(c *gin.Context) {
 		return
 	}
 
-	err = h.service.AddActivity(title, decisionID)
+	boardID := c.Param("id")
+	err = h.service.AddActivity(boardID, title, decisionID)
 	if err != nil {
 		c.HTML(http.StatusInternalServerError, "error.html", gin.H{"error": err.Error()})
 		return
 	}
 
-	c.Redirect(http.StatusFound, "/activities")
+	c.Redirect(http.StatusFound, "/board/"+boardID+"/activities")
 }

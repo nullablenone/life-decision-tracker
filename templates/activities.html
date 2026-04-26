@@ -9,7 +9,7 @@
 
 <div class="card">
     <h3 style="margin-top: 0; font-weight: 800;">Add New Log</h3>
-    <form action="/activities" method="POST">
+    <form action="/board/{{ .board_id }}/activities" method="POST">
         <div class="form-group">
             <label for="title">What happened?</label>
             <input type="text" id="title" name="title" placeholder="e.g. Completed API documentation" required>

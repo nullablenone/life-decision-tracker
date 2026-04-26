@@ -18,11 +18,6 @@ func NewHome(service activity.Service, decisionService decision.Service) *Home {
 }
 
 func (h *Home) HomePage(c *gin.Context) {
-	activities, err := h.service.GetActivities()
-	if err != nil {
-		c.HTML(http.StatusInternalServerError, "error.html", gin.H{"error": err.Error()})
-		return
-	}
 
 	categories, err := h.decisionService.GetDecisionCategories()
 	if err != nil {
@@ -31,7 +26,7 @@ func (h *Home) HomePage(c *gin.Context) {
 	}
 
 	c.HTML(http.StatusOK, "home.html", gin.H{
-		"activities": activities,
+
 		"categories": categories,
 	})
 }
