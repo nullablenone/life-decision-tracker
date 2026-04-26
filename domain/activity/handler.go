@@ -19,6 +19,13 @@ func NewHandler(service Service, decisionService decision.Service) *Handler {
 
 func (h *Handler) Index(c *gin.Context) {
 	boardID := c.Param("id")
+
+	// VALIDASI: Kalau orang ngetik ID ngarang, buang dia ke halaman Home
+	if !h.service.IsBoardValid(boardID) {
+		c.Redirect(http.StatusFound, "/")
+		return
+	}
+
 	activities, err := h.service.GetActivities(boardID)
 	if err != nil {
 		c.HTML(http.StatusInternalServerError, "error.html", gin.H{"error": err.Error()})
@@ -49,11 +56,27 @@ func (h *Handler) Store(c *gin.Context) {
 	}
 
 	boardID := c.Param("id")
+
+	// VALIDASI: Kalau orang ngetik ID ngarang
+	if !h.service.IsBoardValid(boardID) {
+		c.Redirect(http.StatusFound, "/")
+		return
+	}
+
 	err = h.service.AddActivity(boardID, title, decisionID)
 	if err != nil {
 		c.HTML(http.StatusInternalServerError, "error.html", gin.H{"error": err.Error()})
 		return
 	}
 
+	c.Redirect(http.StatusFound, "/board/"+boardID+"/activities")
+}
+
+func (h *Handler) StartBoard(c *gin.Context) {
+	boardID, err := h.service.GenerateNewBoard()
+	if err != nil {
+		c.HTML(http.StatusInternalServerError, "error.html", gin.H{"error": "Gagal membuat sesi baru"})
+		return
+	}
 	c.Redirect(http.StatusFound, "/board/"+boardID+"/activities")
 }

@@ -16,7 +16,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	if err = db.AutoMigrate(decision.DecisionCategory{}, activity.Activity{}); err != nil {
+	if err = db.AutoMigrate(decision.DecisionCategory{},&activity.Board{}, activity.Activity{}); err != nil {
 		log.Fatal("failed to migrate tables")
 	}
 

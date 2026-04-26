@@ -1,10 +1,17 @@
 {{ template "header.html" . }}
+
 <header>
     <div>
         <h1>LifeTracker.</h1>
         <p class="subtitle">Dictionary & Guidelines</p>
     </div>
-    <a href="/start" class="btn-primary">Create New Board &rarr;</a>
+    <div style="text-align: right;">
+        <a href="/start" class="btn-primary">Create New Board &rarr;</a>
+        <p
+            style="font-size: 0.75rem; color: var(--text-light); margin-top: 0.5rem; max-width: 250px; margin-left: auto;">
+            Tanpa login. Simpan link board-mu nanti baik-baik. Ada batas waktu 1 jam untuk membuat board baru.
+        </p>
+    </div>
 </header>
 
 <div class="card" style="padding: 0;">
@@ -25,4 +32,5 @@
         </tbody>
     </table>
 </div>
+
 {{ template "footer.html" . }}
