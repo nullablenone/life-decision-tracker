@@ -11,12 +11,19 @@ import (
 )
 
 func main() {
-	db, err := config.ConnectPostgre()
+
+	env, err := config.NewEnv()
+	if err != nil {
+		log.Println("failed to load .env file: %w", err)
+		log.Println("normal in production")
+	}
+
+	db, err := config.ConnectPostgre(env)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	if err = db.AutoMigrate(decision.DecisionCategory{},&activity.Board{}, activity.Activity{}); err != nil {
+	if err = db.AutoMigrate(decision.DecisionCategory{}, &activity.Board{}, activity.Activity{}); err != nil {
 		log.Fatal("failed to migrate tables")
 	}
 
@@ -35,6 +42,7 @@ func main() {
 	homeHandler := home.NewHome(activityService, decisionService)
 
 	router := routes.SetRoutes(decisionHandler, activityHandler, homeHandler)
+
 	if err = router.Run(":777"); err != nil {
 		log.Fatalf("failed to start HTTP server on :777: %v", err)
 	}
