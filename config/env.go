@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -18,8 +19,15 @@ type Env struct {
 }
 
 func NewEnv() (*Env, error) {
-	if err := godotenv.Load(".env"); err != nil {
-		return nil, err
+	err := godotenv.Load(".env")
+
+	app_env := os.Getenv("APP")
+	if app_env == "" {
+		app_env = "local"
+	}
+
+	if err != nil && app_env == "local" {
+		return nil, fmt.Errorf("failed to load .env file in local: %w", err)
 	}
 
 	env := Env{

@@ -14,8 +14,7 @@ func main() {
 
 	env, err := config.NewEnv()
 	if err != nil {
-		log.Println("failed to load .env file: %w", err)
-		log.Println("normal in production")
+		log.Fatal("failed to load .env file: %w", err)
 	}
 
 	db, err := config.ConnectPostgre(env)
