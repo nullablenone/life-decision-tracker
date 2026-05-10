@@ -4,11 +4,14 @@
     <div>
         <h1>LifeTracker.</h1>
         <p class="subtitle">Dictionary & Guidelines</p>
-        <p style="font-size: 0.75rem; color: var(--text-light); ">Tanpa login. Simpan link board-mu nanti baik-baik. Ada
-            batas waktu 1 jam untuk membuat board baru.</p>
+        <p style="font-size: 0.75rem; color: var(--text-light); ">Tanpa login. Simpan link board-mu nanti baik-baik.</p>
     </div>
     <div style="text-align: right;">
+        {{ if .recent_board_id }}
+        <a href="/board/{{ .recent_board_id }}/activities" class="btn-primary">Resume Board &rarr;</a>
+        {{ else }}
         <a href="/start" class="btn-primary">Create New Board &rarr;</a>
+        {{ end }}
     </div>
 </header>
 

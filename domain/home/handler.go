@@ -25,8 +25,12 @@ func (h *Home) HomePage(c *gin.Context) {
 		return
 	}
 
+	// Cek Cookie
+	recentBoardID, _ := c.Cookie("recent_board_id")
+
 	c.HTML(http.StatusOK, "home.html", gin.H{
 
-		"categories": categories,
+		"categories":      categories,
+		"recent_board_id": recentBoardID,
 	})
 }

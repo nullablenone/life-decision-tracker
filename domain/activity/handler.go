@@ -78,5 +78,9 @@ func (h *Handler) StartBoard(c *gin.Context) {
 		c.HTML(http.StatusInternalServerError, "error.html", gin.H{"error": "Gagal membuat sesi baru"})
 		return
 	}
+
+	// Set Cookie, Expired 30 Hari
+	c.SetCookie("recent_board_id", boardID, 2592000, "/", "", false, true)
+
 	c.Redirect(http.StatusFound, "/board/"+boardID+"/activities")
 }
